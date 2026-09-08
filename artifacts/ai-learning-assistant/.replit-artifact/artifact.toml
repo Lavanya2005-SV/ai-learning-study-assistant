@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "AI Learning & Study Assistant"
+description = "A full-stack agentic learning workspace that lets students upload course materials, ask grounded questions with RAG, generate personalized study plans and quizzes, remember learning preferences and progress, and document project results for an IBM Agentic AI internship demonstration."
+version = "1.0.0"
+id = "artifacts/ai-learning-assistant"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 25567
+
+[services.development]
+run = "pnpm --filter @workspace/ai-learning-assistant run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/ai-learning-assistant", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/ai-learning-assistant/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "25567"
+BASE_PATH = "/"
